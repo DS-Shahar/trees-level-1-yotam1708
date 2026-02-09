@@ -146,3 +146,92 @@ public class RangeTree {
 }
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+import java.util.*;
+public class Main {
+
+///////////////////////////////////////////////////////////////////
+    public static int count(BinNode<Integer> root, int num) {
+        if (root == null) {
+            return 0;
+        }
+        int c = 0;
+        if (root.getValue()==num){
+            c = 1;
+        }
+        
+        return c + count(root.getLeft(), num) + count(root.getRight(), num);
+    
+}
+
+////////////////////////////////////////////////////////////////////
+public static int findMax(BinNode<Integer> root) {
+        if (isLeaf(root)) {
+            return root.getValue();
+        }
+        int a = findMax(root.getLeft());
+        int b = findMax(root.getRight());
+        
+        if (a>b){
+          return a;
+        }
+        
+        return b;
+}
+
+
+
+
+
+
+
+    public static int MinAndMax(BinNode<Integer> root) {
+        if (root == null) {
+            return max + min;
+        }
+        if (root.getValue()>max){
+            max = root.getValue();
+            MinAndMax(root.getLeft()) + MinAndMax(root.getRight());
+        }
+        if (root.getValue()<min){
+            min = root.getValue();
+            MinAndMax(root.getLeft()) + MinAndMax(root.getRight());
+        }
+        
+        return MinAndMax(root.getLeft()) + MinAndMax(root.getRight());
+    
+}
+
+
+
+    public static BinNode<Integer> buildTree(int levels) {
+        if (levels == 0){
+            return null;
+        } 
+        Random rand = new Random();
+        BinNode<Integer> node = new BinNode<>(rand.nextInt(5) + 1); 
+        node.setLeft(buildTree(levels - 1));
+        node.setRight(buildTree(levels - 1));
+        return node;
+    }
+
+    public static void main(String[] args) {
+        BinNode<Integer> myTree = buildTree(3);
+        
+        int toFind = 2;
+        System.out.println("Searching for: " + toFind);
+        System.out.println("Result: " + count(myTree, toFind));
+    }
+}
+
