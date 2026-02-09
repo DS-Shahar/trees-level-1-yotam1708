@@ -167,26 +167,25 @@ public class Main {
             return 0;
         }
         int c = 0;
-        if (root.getValue()==num){
+        if (root.getValue().equals(num)){
             c = 1;
-        }
-        
+        }        
         return c + count(root.getLeft(), num) + count(root.getRight(), num);
     
 }
-
+public static boolean isLeaf(BinNode<Integer> t) {
+    return !t.hasLeft()  && !t.hasRight();
+}
 ////////////////////////////////////////////////////////////////////
-public static int findMax(BinNode<Integer> root) {
+public static int findExtreme(BinNode<Integer> root, int which) { //-1 min, +1 max
         if (isLeaf(root)) {
             return root.getValue();
         }
-        int a = findMax(root.getLeft());
-        int b = findMax(root.getRight());
-        
-        if (a>b){
+        int a = findExtreme(root.getLeft());
+        int b = findExtreme(root.getRight());        
+        if (a * which > which * b){
           return a;
         }
-        
         return b;
 }
 
